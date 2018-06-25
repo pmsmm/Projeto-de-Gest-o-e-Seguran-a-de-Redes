@@ -1,0 +1,4 @@
+ip addr add dev eth0 30.40.2.200/24
+ip link set dev eth0 up
+route add default gw 30.40.2.3
+/etc/init.d/bind start

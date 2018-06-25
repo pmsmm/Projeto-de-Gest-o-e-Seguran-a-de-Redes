@@ -1,0 +1,27 @@
+ip addr add dev eth0 10.20.65.129/26
+ip link set dev eth0 up
+ip addr add dev eth1 10.20.65.2/26
+ip link set dev eth1 up
+
+ip route add default via 10.20.65.1
+
+/etc/init.d/snmpd start
+
+
+
+echo "
+option domain-name-servers 10.20.64.80;
+
+subnet 10.20.65.128 netmask 255.255.255.192 {
+	range 10.20.65.130 10.20.65.190;
+	option routers 10.20.65.129;
+}" >> /etc/dhcp3/dhcpd.conf
+/etc/init.d/dhcp3-server start
+
+
+cd /
+openvpn client.conf > openvpn.log &
+
+
+
+

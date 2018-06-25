@@ -1,0 +1,9 @@
+ip link set dev eth0 up
+ip link set dev eth1 up
+brctl addbr br0
+brctl addif br0 eth0
+brctl addif br0 eth1
+ip link set dev br0 up
+
+mkdir ./log
+snort -d -l ./log -h 10.20.64.0/26 -c /etc/snort/snort.conf -A console &

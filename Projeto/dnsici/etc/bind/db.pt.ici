@@ -1,0 +1,16 @@
+$TTL    60000
+@               IN      SOA     dnsici.ici.pt.    root.dnsici.ici.pt. (
+                        2006031201 ; serial
+                        28 ; refresh
+                        14 ; retry
+                        3600000 ; expire
+                        0 ; negative cache ttl
+                        )
+
+@               	IN      NS      dnsici.ici.pt.
+dnsici          	IN      A       10.20.64.80
+
+historian 	     	IN	A	10.20.64.194
+www			IN      A	10.20.64.100
+
+

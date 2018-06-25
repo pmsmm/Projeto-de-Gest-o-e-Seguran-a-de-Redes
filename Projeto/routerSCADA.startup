@@ -1,0 +1,64 @@
+ip addr add dev eth0 10.20.65.1/26
+ip link set dev eth0 up
+ip addr add dev eth1 10.20.65.65/26
+ip link set dev eth1 up
+ip addr add dev eth2 10.20.64.130/26
+ip link set dev eth2 up
+
+ip route add 10.20.65.128/26 via 10.20.65.2
+ip route add 10.20.65.192/26 via 10.20.65.66
+ip route add default via 10.20.64.129
+
+
+/etc/init.d/snmpd start
+/etc/init.d/openvpn start
+
+
+
+#Trafego da LAN SCADA para as Subestacoes
+iptables -A FORWARD -s 10.20.64.128/26 -d 10.20.65.128/26 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.128/26 -d 10.20.65.192/26 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.128/26 -d 10.20.65.2 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.128/26 -d 10.20.65.66 -j ACCEPT
+iptables -A OUTPUT -d 10.20.65.128/26 -j ACCEPT
+iptables -A OUTPUT -d 10.20.65.192/26 -j ACCEPT
+iptables -A OUTPUT -d 10.20.65.2 -j ACCEPT
+iptables -A OUTPUT -d 10.20.65.66 -j ACCEPT
+
+#Trafego das Subestacoes para a LAN SCADA
+iptables -A FORWARD -s 10.20.65.128/26 -d 10.20.64.128/26 -j ACCEPT
+iptables -A FORWARD -s 10.20.65.192/26 -d 10.20.64.128/26 -j ACCEPT
+iptables -A FORWARD -s 10.20.65.2 -d 10.20.64.128/26  -j ACCEPT
+iptables -A FORWARD -s 10.20.65.66 -d 10.20.64.128/26 -j ACCEPT
+iptables -A INPUT -s 10.20.65.128/26 -j ACCEPT
+iptables -A INPUT -s 10.20.65.192/26 -j ACCEPT
+iptables -A INPUT -s 10.20.65.2 -j ACCEPT
+iptables -A INPUT -s 10.20.65.66 -j ACCEPT
+
+
+#VPN
+iptables -A FORWARD -s 10.20.64.128/26 -d 200.200.200.0/25 -j ACCEPT
+iptables -A FORWARD -s 200.200.200.0/25 -d 10.20.64.128/26 -j ACCEPT
+iptables -A INPUT -s 10.20.64.128/26 -j ACCEPT
+iptables -A OUTPUT -d 10.20.64.128/26 -j ACCEPT
+iptables -A FORWARD -s 200.200.200.0/25 -d 200.200.200.0/25 -j ACCEPT
+iptables -A INPUT -s 200.200.200.0/25 -j ACCEPT
+iptables -A OUTPUT -d 200.200.200.0/25 -j ACCEPT
+
+
+#DNS (UDP-port 53)
+iptables -A FORWARD -s 10.20.64.80 -d 10.20.64.128/26 -p udp --sport 53 --dport ! 1:1023 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.128/26 -d 10.20.64.80 -p udp --sport ! 1:1023 --dport 53 -j ACCEPT
+
+#Pings (ICMP, Type 0 - Echo Reply; Type 8 - Echo Request)
+iptables -A FORWARD -s 10.20.64.0/21 -d 10.20.64.0/21 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.0/21 -d 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A INPUT -s 10.20.64.0/21 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A INPUT -s 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A OUTPUT -d 10.20.64.0/21 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A OUTPUT -d 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+
+#Default policy
+iptables -P FORWARD DROP
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP

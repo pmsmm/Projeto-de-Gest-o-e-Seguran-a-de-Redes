@@ -1,0 +1,23 @@
+ip addr add dev eth0 10.20.64.80/26
+ip link set dev eth0 up
+route add default gw 10.20.64.65
+
+/etc/init.d/bind start
+
+#SSH RELATED INSTRUCTIONS -- START --
+
+adduser --disabled-password --gecos "" admin
+echo admin:root | chpasswd
+mkdir /home/admin/.ssh
+
+chmod 700 /home/admin/.ssh
+cat /id_rsa.pub >> /home/admin/.ssh/authorized_keys
+cat /id_rsa2.pub >> /home/admin/.ssh/authorized_keys
+cat /id_rsa3.pub >> /home/admin/.ssh/authorized_keys
+chmod 600 /home/admin/.ssh/authorized_keys
+rm /id_rsa.pub
+chown -R admin:admin /home/admin/.ssh
+
+/etc/init.d/ssh start
+
+#SSH RELATED INSTRUCTIONS -- END --

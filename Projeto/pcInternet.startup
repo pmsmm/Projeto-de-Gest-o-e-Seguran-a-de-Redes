@@ -1,0 +1,10 @@
+ip addr add dev eth0 30.40.0.100/24
+ip link set dev eth0 up
+route add default gw 30.40.0.1
+
+/etc/init.d/ssh start
+chmod 700 /root/.ssh
+chmod 700 /root/.ssh/id_rsa
+chmod 644 /root/.ssh/id_rsa.pub
+
+chmod 644 /root/.ssh/known_hosts

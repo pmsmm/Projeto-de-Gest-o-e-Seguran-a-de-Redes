@@ -1,0 +1,72 @@
+ip addr add dev eth0 10.20.64.1/26
+ip link set dev eth0 up
+ip addr add dev eth1 10.20.64.65/26
+ip link set dev eth1 up
+ip addr add dev eth2 10.20.64.129/26
+ip link set dev eth2 up
+ip addr add dev eth3 10.20.64.193/26
+ip link set dev eth3 up
+ip addr add dev eth4 169.254.1.1/24
+ip link set dev eth4 up
+
+ip route add 30.40.0.0/22 via 169.254.1.2
+ip route add 10.20.65.0/24 via 10.20.64.130
+ip route add 10.8.0.0/24 via 10.20.64.130
+ip route add 10.20.65.128/26 via 10.20.64.130
+ip route add 10.20.65.192/26 via 10.20.64.130
+
+/etc/init.d/snmpd start
+
+echo "
+
+	option domain-name-servers 10.20.64.80;
+
+     subnet 10.20.64.0 netmask 255.255.255.192{
+	range 10.20.64.2 10.20.64.62;
+	option routers 10.20.64.1;
+      }
+      subnet 10.20.64.128 netmask 255.255.255.192{
+	range 10.20.64.131 10.20.64.190;
+	option routers 10.20.64.130;
+}" >> /etc/dhcp3/dhcpd.conf
+/etc/init.d/dhcp3-server start
+
+#WWW (TCP-port 80)
+iptables -A FORWARD -s 10.20.64.100 -d ! 10.20.64.0/21 -p tcp --sport 80 --dport ! 1:1023 -j ACCEPT
+iptables -A FORWARD -s ! 10.20.64.0/21 -d 10.20.64.100 -p tcp --sport ! 1:1023 --dport 80 -j ACCEPT
+
+#DNS (UDP-port 53)
+iptables -A FORWARD -s 10.20.64.80 -p udp --sport 53 --dport ! 1:1023 -j ACCEPT
+iptables -A FORWARD -d 10.20.64.80 -p udp --sport ! 1:1023 --dport 53 -j ACCEPT
+
+#Pings (ICMP, Type 0 - Echo Reply; Type 8 - Echo Request)
+iptables -A FORWARD -s 10.20.64.0/21 -d 10.20.64.0/21 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.0/21 -d 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A INPUT -s 10.20.64.0/21 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A INPUT -s 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A OUTPUT -d 10.20.64.0/21 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A OUTPUT -d 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.2 -d ! 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.3 -d ! 10.20.64.0/21 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A FORWARD -s ! 10.20.64.0/21 -d 10.20.64.2 -p icmp --icmp-type 0 -j ACCEPT
+iptables -A FORWARD -s ! 10.20.64.0/21 -d 10.20.64.3 -p icmp --icmp-type 0 -j ACCEPT
+
+#SSH
+iptables -A FORWARD -s 10.20.64.2 -d 10.20.64.100 -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.100 -d 10.20.64.2 -p tcp --sport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.2 -d 10.20.64.80 -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.80 -d 10.20.64.2 -p tcp --sport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.3 -d 10.20.64.100 -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.100 -d 10.20.64.3 -p tcp --sport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.3 -d 10.20.64.80 -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.80 -d 10.20.64.3 -p tcp --sport 22 -j ACCEPT
+iptables -A FORWARD -s 30.40.0.100 -d 10.20.64.100 -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.100 -d 30.40.0.100 -p tcp --sport 22 -j ACCEPT
+iptables -A FORWARD -s 30.40.0.100 -d 10.20.64.80 -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -s 10.20.64.80 -d 30.40.0.100 -p tcp --sport 22 -j ACCEPT
+
+#Default policy
+iptables -P FORWARD DROP
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+

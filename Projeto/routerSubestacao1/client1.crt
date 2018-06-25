@@ -1,0 +1,71 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, ST=CA, L=SanFrancisco, O=Fort-Funston, CN=server/emailAddress=me@myhost.mydomain
+        Validity
+            Not Before: May 17 15:49:57 2018 GMT
+            Not After : May 14 15:49:57 2028 GMT
+        Subject: C=US, ST=CA, L=SanFrancisco, O=Fort-Funston, CN=client1/emailAddress=me@myhost.mydomain
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:db:2b:9c:da:77:03:c8:8d:9c:52:3c:18:65:a1:
+                    87:37:cf:60:d0:c9:96:fa:bb:49:92:b3:ae:61:c0:
+                    ad:d9:9f:c8:ea:0d:bb:fb:31:dc:1b:5b:9a:f5:f1:
+                    5b:03:7c:ca:f4:50:c1:0d:52:bb:b6:c4:c6:bd:2f:
+                    2d:a1:6c:69:7a:6f:d2:a8:40:96:73:3b:a0:ff:f3:
+                    bd:88:9a:95:84:fe:5e:3d:fd:c1:77:45:a6:8a:85:
+                    cc:24:59:ea:df:ed:5b:2f:2f:b1:3b:85:4f:9a:f8:
+                    29:5c:87:46:22:60:42:fd:d7:82:6e:dc:c3:03:bc:
+                    36:5b:5c:1d:10:b9:c5:c5:81
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                24:DD:55:22:FA:D6:B5:2E:A1:96:55:24:64:DD:53:86:16:E2:B7:80
+            X509v3 Authority Key Identifier: 
+                keyid:C3:4B:BD:28:F7:2E:60:CB:02:E1:A2:58:86:C0:C7:40:15:CC:F1:AE
+                DirName:/C=US/ST=CA/L=SanFrancisco/O=Fort-Funston/CN=server/emailAddress=me@myhost.mydomain
+                serial:A0:96:B6:5C:5E:65:E9:E9
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+    Signature Algorithm: sha1WithRSAEncryption
+        a5:6d:db:22:ac:5a:1b:00:65:48:92:e0:79:04:df:8e:dc:cf:
+        24:0b:e3:1b:dd:63:19:2b:25:d4:3a:da:24:f8:d4:a7:4e:5e:
+        23:e9:4d:0e:fa:7c:4a:39:8d:27:70:b2:44:2d:42:f2:c2:7c:
+        b3:bf:79:7c:a7:4c:61:6a:df:8c:c4:2c:57:5a:99:d4:8e:f1:
+        f3:c7:78:16:e1:95:85:60:9d:27:c7:96:ec:c0:63:0d:a1:85:
+        c4:b8:a8:ed:fa:04:85:23:ef:5e:cd:e7:95:f3:4e:24:ba:8f:
+        69:02:26:04:50:d0:61:1c:8a:70:46:bd:38:92:4a:d7:f2:48:
+        a7:aa
+-----BEGIN CERTIFICATE-----
+MIIDojCCAwugAwIBAgIBAjANBgkqhkiG9w0BAQUFADB8MQswCQYDVQQGEwJVUzEL
+MAkGA1UECBMCQ0ExFTATBgNVBAcTDFNhbkZyYW5jaXNjbzEVMBMGA1UEChMMRm9y
+dC1GdW5zdG9uMQ8wDQYDVQQDEwZzZXJ2ZXIxITAfBgkqhkiG9w0BCQEWEm1lQG15
+aG9zdC5teWRvbWFpbjAeFw0xODA1MTcxNTQ5NTdaFw0yODA1MTQxNTQ5NTdaMH0x
+CzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEVMBMGA1UEBxMMU2FuRnJhbmNpc2Nv
+MRUwEwYDVQQKEwxGb3J0LUZ1bnN0b24xEDAOBgNVBAMTB2NsaWVudDExITAfBgkq
+hkiG9w0BCQEWEm1lQG15aG9zdC5teWRvbWFpbjCBnzANBgkqhkiG9w0BAQEFAAOB
+jQAwgYkCgYEA2yuc2ncDyI2cUjwYZaGHN89g0MmW+rtJkrOuYcCt2Z/I6g27+zHc
+G1ua9fFbA3zK9FDBDVK7tsTGvS8toWxpem/SqECWczug//O9iJqVhP5ePf3Bd0Wm
+ioXMJFnq3+1bLy+xO4VPmvgpXIdGImBC/deCbtzDA7w2W1wdELnFxYECAwEAAaOC
+ATEwggEtMAkGA1UdEwQCMAAwLQYJYIZIAYb4QgENBCAWHkVhc3ktUlNBIEdlbmVy
+YXRlZCBDZXJ0aWZpY2F0ZTAdBgNVHQ4EFgQUJN1VIvrWtS6hllUkZN1Thhbit4Aw
+ga8GA1UdIwSBpzCBpIAUw0u9KPcuYMsC4aJYhsDHQBXM8a6hgYCkfjB8MQswCQYD
+VQQGEwJVUzELMAkGA1UECBMCQ0ExFTATBgNVBAcTDFNhbkZyYW5jaXNjbzEVMBMG
+A1UEChMMRm9ydC1GdW5zdG9uMQ8wDQYDVQQDEwZzZXJ2ZXIxITAfBgkqhkiG9w0B
+CQEWEm1lQG15aG9zdC5teWRvbWFpboIJAKCWtlxeZenpMBMGA1UdJQQMMAoGCCsG
+AQUFBwMCMAsGA1UdDwQEAwIHgDANBgkqhkiG9w0BAQUFAAOBgQClbdsirFobAGVI
+kuB5BN+O3M8kC+Mb3WMZKyXUOtok+NSnTl4j6U0O+nxKOY0ncLJELULywnyzv3l8
+p0xhat+MxCxXWpnUjvHzx3gW4ZWFYJ0nx5bswGMNoYXEuKjt+gSFI+9ezeeV804k
+uo9pAiYEUNBhHIpwRr04kkrX8kinqg==
+-----END CERTIFICATE-----
