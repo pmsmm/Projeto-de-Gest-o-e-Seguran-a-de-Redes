@@ -12,6 +12,7 @@ Após isto resta entrar na diretoria "Projeto" através de um terminal e executa
 Por fim interage-se com o projeto da mesma forma que se interage com máquina unix digitando os comandos pretendidos nos terminais de cada máquina
 
 ############################################################################################
+# Management and Security of Networks Projetct
 Management and Security of Networks project made in 2017/2018 for the Course of Management and Security of Networks by the following students:
 - Pedro Maria
 - Miguel Gonçalves
